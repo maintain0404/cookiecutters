@@ -1,0 +1,44 @@
+[tool.poetry]
+name = "{{cookiecutter.name}}"
+version = "0.1.0"
+description = "{{cookiecutter.description}}"
+authors = ["{{cookiecutter.author_name}} <{{cookiecutter.author_email}}>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "{{cookiecutter.version}}"
+
+[tool.poetry.group.dev]
+optional = true
+
+    [tool.poetry.group.dev.dependencies]
+    ruff = "^0.0.267"
+    black = "^23.3.0"
+
+[tool.poetry.group.test]
+optional = true
+
+    [tool.poetry.group.test.dependencies]
+    pytest = "^7.3.1"
+    pytest-asyncio = "^0.21.0"
+
+[tool.ruff]
+select = ['E', 'F', 'I', 'D', 'UP']
+src = ['{{cookiecutter.name}}', 'tests']
+
+    [tool.ruff.isort]  # rule I
+    extra-standard-library = ["typing_extensions"]
+    required-imports = ["from __future__ import annotations"]
+    known-first-party = ['{{cookiecutter.name}}']
+
+    [tool.ruff.pydocstyle]  # rule D
+    convention = 'google'
+
+[tool.pytest.ini_options]
+pythonpath = ["./"]
+testpaths = ['./tests']
+asyncio_mode = 'auto'
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
